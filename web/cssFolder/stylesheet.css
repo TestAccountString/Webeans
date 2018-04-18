@@ -7,6 +7,10 @@
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
 }
+
+.knopfGroesse{
+    background-color: crimson;
+}
 .header{
     clear: left;
     font-family: "Impact";
@@ -21,9 +25,7 @@
     margin-top: 5pt;
 }
 
-.button{
 
-}
 
 #anzeige{
    visibility: hidden;

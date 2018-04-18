@@ -1,7 +1,16 @@
 .knopfGroesse {
     width: 60px;
+    background: repeating-radial-gradient(circle, gainsboro, darkgrey);
 }
+.roundedCornersTopLR{
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
 
+}
+.roundedCornersBottomLR{
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
 * { /*
     border: 1px solid #0F1626;
    */
