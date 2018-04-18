@@ -6,6 +6,8 @@
     <JAVADOC>
       <root url="https://tomcat.apache.org/tomcat-7.0-doc/servletapi/" />
     </JAVADOC>
-    <SOURCES />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../Coffemat2/src" />
+    </SOURCES>
   </library>
 </component>
