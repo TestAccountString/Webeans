@@ -6,7 +6,7 @@ public class Ingredient {
     private int amount;
 
     public enum IngredientType{
-        WATER, BEANS, MILK
+        WATER, BEANS,
     }
     public enum Unit{
         GRAM, MILLI_LITRE

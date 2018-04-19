@@ -2,16 +2,31 @@
     width: 60px;
     background: repeating-radial-gradient(circle, gainsboro, darkgrey);
 }
-.roundedCornersTopLR{
+.knopfGroesse:active {
+    background-color: darkgrey;
+    box-shadow: 0 5px gainsboro ;
+    transform: translateY(0.1em);
+
+}
+.roundedCornersTopLR {
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
 
 }
-.roundedCornersBottomLR{
+
+.roundedCornersBottomLR {
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
 }
-* { /*
-    border: 1px solid #0F1626;
-   */
+
+img{
+    padding-top:1px;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+
+* {
+    /*
+       border: 1px solid #0F1626;
+      */
 }

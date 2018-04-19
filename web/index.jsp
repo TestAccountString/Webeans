@@ -1,24 +1,46 @@
-<%@ page import="com.ifm.azubi.coffeemat.v2.Button" %>
 <%@ page import="com.ifm.azubi.coffeemat.v2.Ingredient" %>
 <%@ page import="com.ifm.azubi.coffeemat.v2.Machine" %>
+<%@ page import="com.ifm.azubi.coffeemat.v2.PersistentData" %>
 <%
     Machine machine = new Machine();
+    PersistentData.load();
     String buttonParam = request.getParameter("button");
     String display = machine.getDisplay().getMessage();
     String waterContainment = request.getParameter("wasserBehaelter");
     String beanContainment = request.getParameter("bohnenBehaelter");
     String url_var = "drawable/coffeecup_empty.png";
-    machine.getWaterContainment().setAmount(585);
-    Cookie waterAmount = new Cookie("waterAmount", Integer.toString(machine.getWaterContainment().getAmount()));
-    //  while(waterAmount != null) {
-    if (buttonParam != null && Integer.parseInt(buttonParam) != 3 && Integer.parseInt(buttonParam) != 4) {
-        int buttonId = Integer.parseInt(buttonParam);
-        Button button = new Button(machine, buttonId);
-        if (machine.checkRequirements(machine.getRecipesToButton().get(button.getButtonId()))) {
-            machine.pressed(button);
-        } else {
+
+
+    if (buttonParam != null) {
+        switch (Integer.parseInt(buttonParam)) {
+            case 1:
+                machine.getSmallCoffeeButton().press();
+                url_var = "drawable/fillingMug.gif";
+                break;
+            case 2:
+                machine.getLargeCoffeeButton().press();
+                url_var = "drawable/coffeecup_full.png";
+                break;
+            case 3:
+                machine.getWarmWaterButton().press();
+                url_var = "drawable/waterCup_full.png";
+                break;
+            case 4:
+                machine.status();
+                url_var = "drawable/c64.gif";
+                break;
+            case 5:
+                //int fillArea = getPara;
+                PersistentData.setBeanAmount(machine.getBeanContainment().give(400));
+                break;
+            case 6:
+                PersistentData.setWaterAmount(machine.getWaterContainment().give(600));
+                break;
+            default:
+                break;
         }
     }
+    PersistentData.save();
 %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -36,37 +58,41 @@
         <div id="wasserBehaelter" style="display: inline; width: 49%; float: left;">
             Wasserbeh&auml;lter: <%=machine.getWaterContainment().getAmount() + "" +
                 Ingredient.Unit.MILLI_LITRE%>
-            <div style="background-color: #1ca3ec; display:inline; width: 500px">&nbsp</div>
+            <div style="background-color: #1ca3ec; display:inline-block; width: 500px">&nbsp</div>
+            <br>
         </div>
     </form>
     <form action="index.jsp" method="get" name="bohnenBehaelter">
         <div id="bohnenBehaelter" style="display:inline">
             Bohnenbeh&auml;lter: <%=machine.getBeanContainment().getAmount() + "" + Ingredient.Unit.GRAM%>
+            <div style="background-color: #412c1b ; display:inline-block; width: 500px">&nbsp</div>
         </div>
-        <div style="background-color: #412c1b ; display:inline; width: 500px">&nbsp</div>
     </form>
 </div>
-
 <form action="index.jsp" method="get">
     <img id="gefaess" src="<%=url_var%>" style="display: inline; width: 300px;float:left;"/>
 </form>
 <div style="clear:both; display:inline-block">
     <form name="buttons" action="index.jsp" method="get">
-       <div style =" width: 100% ;border: 1px solid crimson">
-           <textarea style="width: 50%; height:50px; overflow: hidden"
-                  placeholder=" – Coffeemat – "<%=display%>"></textarea>
-            <textarea name="refill" style="width: 480px; height:30px" placeholder="Füllwert angeben"></textarea></div>
-        <div id="knoepfe">
+        <div style=" width: 415px ;">
+            <textarea style="float:right ;width: 49%; height:100px; overflow: hidden"
+                      placeholder=" – Coffeemat – " name="wasser"><%=display%></textarea>
+            <textarea name="bohnen" style="float: right; width: 49%; height:100px"
+                      placeholder="Füllwert angeben"></textarea></div>
+        <div id="knoepfe"><br>
             <input type="submit" name="button" value="1" id="knopfKleinerKaffee"
-                   class="knopfGroesse roundedCornersBottomLR roundedCornersTopLR">Klein</input>
+                   class="knopfGroesse ">Klein</input><br>
             <input type="submit" name="button" value="2" id="knopfGrosserKaffee"
-                   class="knopfGroesse roundedCornersBottomLR roundedCornersTopLR">Gro&szlig;</input>
+                   class="knopfGroesse ">Gro&szlig;</input><br>
             <input type="submit" name="button" value="3" id="knopfHeissesWasser"
-                   class="knopfGroesse roundedCornersBottomLR roundedCornersTopLR">Wasser</input>
+                   class="knopfGroesse ">Wasser</input><br>
             <input type="submit" name="button" value="4" id="knopfStatus"
-                   class="knopfGroesse roundedCornersBottomLR roundedCornersTopLR">Status</input>
+                   class="knopfGroesse">Status</input><br>
             <input type="submit" name="button" value="5" id="bohnenFuellenButton"
-                   class="knopfGroesse roundedCornersBottomLR roundedCornersTopLR">Bohnenbeh&auml;lter
+                   class="knopfGroesse">Bohnenbeh&auml;lter
+            f&uuml;llen</input><br>
+            <input type="submit" name="button" value="6" id="wasserFuellenButton"
+                   class="knopfGroesse">Wasserbeh&auml;lter
             f&uuml;llen</input>
         </div>
     </form>

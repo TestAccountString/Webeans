@@ -15,6 +15,7 @@ public class PersistentData {
     private static String WATER_AMOUNT = "containment.water.amount";
  // private static String MILK_AMOUNT = "containment.milk.amount";
 
+
     public static void save() {
         try (final FileWriter writer = new FileWriter(LASTVALUES_PROPERTIES_FILENAME)) {
             lastValues.store(writer, "CoffeeMat v2");
@@ -53,22 +54,12 @@ public class PersistentData {
         lastValues.setProperty(CAPACITYWATER, Integer.toString(value));
     }
 
- /*   public static void setCapacityMilk(int value) {
-        lastValues.setProperty(CAPACITYMILK, Integer.toString(value));
-    }
-    public static int getCapacityMilk() {
-        final String valStr = lastValues.getProperty(CAPACITYMILK);
-
-        return valStr != null ? Integer.parseInt(valStr) : 0;
-    }*/
-
     public static int getBeanAmount() {
         String valStr = lastValues.getProperty(BEAN_AMOUNT);
-
-        return valStr != null ? Integer.parseInt(valStr) : 0;
+            return valStr != null ? Integer.parseInt(valStr) : 0;
     }
 
-    public static void  setBeanAmount(int value) {
+    public static void setBeanAmount(int value) {
         lastValues.setProperty(BEAN_AMOUNT, Integer.toString(value));
     }
 
@@ -78,18 +69,7 @@ public class PersistentData {
         return valStr != null ? Integer.parseInt(valStr) : 0;
     }
 
-    public void setWaterAmount(int value) {
+    public static void setWaterAmount(int value) {
         lastValues.setProperty(WATER_AMOUNT, Integer.toString(value));
     }
-    //</editor-fold>
-  /*  public static int getMilkAmount() {
-        String valStr = lastValues.getProperty(MILK_AMOUNT);
-
-        return valStr != null ? Integer.parseInt(valStr) : 0;
-    }
-
-    public static void setMilkAmount(int value) {
-        lastValues.setProperty(MILK_AMOUNT, Integer.toString(value));
-    }*/
-            //</editor-fold>
 }
