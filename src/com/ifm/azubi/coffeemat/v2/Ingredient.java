@@ -9,7 +9,7 @@ public class Ingredient {
         WATER, BEANS,
     }
     public enum Unit{
-        GRAM, MILLI_LITRE
+        GRAM, MILLILITRE
     }
 
     public Ingredient(IngredientType type, Unit unit, int amount) {

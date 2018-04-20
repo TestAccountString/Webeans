@@ -3,24 +3,19 @@
 <%@ page import="com.ifm.azubi.coffeemat.v2.PersistentData" %>
 <%
     PersistentData.load();
-    // PersistentData.setWaterAmount(0);
     PersistentData.save();
     Machine machine = new Machine();
-    String beanPercentage = Integer.toString((PersistentData.getBeanAmount() / PersistentData.getCapacityBean()) * 100) + "%";
-    String waterPercentage = Integer.toString((PersistentData.getWaterAmount() / PersistentData.getCapacityWater()) * 100) + "%";
     String buttonParam = request.getParameter("button");
     String display = machine.getDisplay().getMessage();
-    String waterContainment = request.getParameter("wasserBehaelter");
-    String beanContainment = request.getParameter("bohnenBehaelter");
     String scrapBeansTogether = request.getParameter("fuellwertBeans");
     String scrapWaterTogether = request.getParameter("fuellwertWater");
     String url_var = "drawable/coffeecup_empty.png";
     if (buttonParam == null) {
-        buttonParam = "8";
+        buttonParam = "99";
     }
     switch (Integer.parseInt(buttonParam)) {
         case 1:
-            display = "Brewing small Coffee...";
+
             machine.getSmallCoffeeButton().press();
             url_var = "drawable/coffeecup_full.png";
             display = "Done - Enjoy your "
@@ -76,7 +71,7 @@
         default:
             break;
     }
-    machine.checkCapacities(true);
+   // machine.checkCapacities(true);
     PersistentData.save();
 
 %>
@@ -94,9 +89,10 @@
 <div id="oben">
     <form action="index.jsp" method="get" name="bohnenBehaelter">
         <div id="wasserBehaelter" style="display:inline">
-            Wasserbehälter:<%=PersistentData.getWaterAmount()%> <%=Ingredient.Unit.MILLI_LITRE%>
+            Wasserbehälter:<%=PersistentData.getWaterAmount()%> <%=Ingredient.Unit.MILLILITRE%>
             <div style="width: 500px; background-color: white; border: 1px groove lightslategray">
-                <progress class="barWidth" value="<%=PersistentData.getWaterAmount()%>" max="<%=PersistentData.getCapacityWater()%>"></progress>
+                <progress class="barWidth" value="<%=PersistentData.getWaterAmount()%>"
+                          max="<%=PersistentData.getCapacityWater()%>"></progress>
             </div>
         </div>
     </form>
@@ -104,7 +100,8 @@
         <div id="bohnenBehaelter" style="display:inline;">
             Bohnenbehälter:<%=PersistentData.getBeanAmount()%> <%=Ingredient.Unit.GRAM%>
             <div style="width: 500px; background-color: white; border: 1px dashed lightslategray">
-                <progress class="barWidth" value="<%=PersistentData.getBeanAmount()%>" max="<%=PersistentData.getCapacityBean()%>"></progress>
+                <progress class="barWidth" value="<%=PersistentData.getBeanAmount()%>"
+                          max="<%=PersistentData.getCapacityBean()%>"></progress>
             </div>
         </div>
     </form>

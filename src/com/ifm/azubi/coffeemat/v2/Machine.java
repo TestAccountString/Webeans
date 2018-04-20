@@ -8,7 +8,7 @@ import java.util.Map;
 import static com.ifm.azubi.coffeemat.v2.Ingredient.IngredientType.BEANS;
 import static com.ifm.azubi.coffeemat.v2.Ingredient.IngredientType.WATER;
 import static com.ifm.azubi.coffeemat.v2.Ingredient.Unit.GRAM;
-import static com.ifm.azubi.coffeemat.v2.Ingredient.Unit.MILLI_LITRE;
+import static com.ifm.azubi.coffeemat.v2.Ingredient.Unit.MILLILITRE;
 import static com.ifm.azubi.coffeemat.v2.PersistentData.getBeanAmount;
 //</editor-fold>
 
@@ -32,31 +32,32 @@ public class Machine {
 
         Recipe smallCoffee = new Recipe("SmallCoffee");
         smallCoffee.addIngredient(new Ingredient(BEANS, GRAM, 10));
-        smallCoffee.addIngredient(new Ingredient(WATER, MILLI_LITRE, 200));
+        smallCoffee.addIngredient(new Ingredient(WATER, MILLILITRE, 200));
         recipesToButton.put(1, smallCoffee);
 
         Recipe largeCoffee = new Recipe("LargeCoffee");
         largeCoffee.addIngredient(new Ingredient(BEANS, GRAM, 20));
-        largeCoffee.addIngredient(new Ingredient(WATER, MILLI_LITRE, 300));
+        largeCoffee.addIngredient(new Ingredient(WATER, MILLILITRE, 300));
         recipesToButton.put(2, largeCoffee);
 
         Recipe warmWater = new Recipe("WarmWater");
-        warmWater.addIngredient(new Ingredient(WATER, MILLI_LITRE, 350));
+        warmWater.addIngredient(new Ingredient(WATER, MILLILITRE, 350));
         recipesToButton.put(3, warmWater);
     }
 
     public void pressed(Button button) {
         Recipe recipe = recipesToButton.get(button.getButtonId());
-        display.setMessage("Beans ->\t" + beanContainment.getAmount());
-        display.output();
-        display.setMessage("Water ->\t" + waterContainment.getAmount());
-        display.output();
         if (recipe == null) {
-            if (button.getButtonId() == 6) {
+            if (button.getButtonId() == 7) {
                 shutdown();
             }
             throw new IllegalArgumentException("Ungültige ButtonID. ");
         }
+        display.setMessage("Beans ->\t" + PersistentData.getBeanAmount());
+        display.output();
+        display.setMessage("Water ->\t" + PersistentData.getWaterAmount());
+        display.output();
+
         if (checkRequirements(recipe)) {
             make(recipe);
         }
@@ -89,7 +90,16 @@ public class Machine {
         }
         return true;
     }
-
+    public void checkCapacities(boolean b) {
+        if (b) {
+            if (PersistentData.getBeanAmount() > PersistentData.getCapacityBean()) {
+                PersistentData.setBeanAmount(PersistentData.getCapacityBean());
+            }
+            if (PersistentData.getWaterAmount() > PersistentData.getCapacityWater()) {
+                PersistentData.setWaterAmount(PersistentData.getCapacityWater());
+            }
+        }
+    }
     //</editor-fold">
 
     private void make(Recipe recipe) {
@@ -136,14 +146,6 @@ public class Machine {
 
     public Button getWarmWaterButton() {
         return warmWaterButton;
-    }
-
-    public Containment getBeanContainment() {
-        return beanContainment;
-    }
-
-    public Containment getWaterContainment() {
-        return waterContainment;
     }
 
     public Button getShutdownButton() {
