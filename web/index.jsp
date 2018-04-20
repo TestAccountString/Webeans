@@ -1,13 +1,13 @@
+<%@ page import="com.ifm.azubi.coffeemat.v2.Ingredient" %>
 <%@ page import="com.ifm.azubi.coffeemat.v2.Machine" %>
 <%@ page import="com.ifm.azubi.coffeemat.v2.PersistentData" %>
-<%@ page import="com.ifm.azubi.coffeemat.v2.Ingredient" %>
 <%
     PersistentData.load();
     // PersistentData.setWaterAmount(0);
     PersistentData.save();
     Machine machine = new Machine();
-    String beanPercentage = Integer.toString((PersistentData.getBeanAmount() / PersistentData.getCapacityBean())*100)+"%";
-    String waterPercentage = Integer.toString((PersistentData.getWaterAmount() / PersistentData.getCapacityWater())*100)+"%";
+    String beanPercentage = Integer.toString((PersistentData.getBeanAmount() / PersistentData.getCapacityBean()) * 100) + "%";
+    String waterPercentage = Integer.toString((PersistentData.getWaterAmount() / PersistentData.getCapacityWater()) * 100) + "%";
     String buttonParam = request.getParameter("button");
     String display = machine.getDisplay().getMessage();
     String waterContainment = request.getParameter("wasserBehaelter");
@@ -95,8 +95,8 @@
     <form action="index.jsp" method="get" name="bohnenBehaelter">
         <div id="wasserBehaelter" style="display:inline">
             Wasserbehälter:<%=PersistentData.getWaterAmount()%> <%=Ingredient.Unit.MILLI_LITRE%>
-            <div style="width: 500px; background-color: white; border: 1px dashed lightslategray">
-                <div style="background-color: #6699ff ; display:inline-block; width: <%=waterPercentage%>">&nbsp;</div>
+            <div style="width: 500px; background-color: white; border: 1px groove lightslategray">
+                <progress class="barWidth" value="<%=PersistentData.getWaterAmount()%>" max="<%=PersistentData.getCapacityWater()%>"></progress>
             </div>
         </div>
     </form>
@@ -104,7 +104,7 @@
         <div id="bohnenBehaelter" style="display:inline;">
             Bohnenbehälter:<%=PersistentData.getBeanAmount()%> <%=Ingredient.Unit.GRAM%>
             <div style="width: 500px; background-color: white; border: 1px dashed lightslategray">
-                <div style="background-color: #412c1b ; display:inline-block; width: <%=beanPercentage%>">&nbsp;</div>
+                <progress class="barWidth" value="<%=PersistentData.getBeanAmount()%>" max="<%=PersistentData.getCapacityBean()%>"></progress>
             </div>
         </div>
     </form>

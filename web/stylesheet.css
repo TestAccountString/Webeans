@@ -18,6 +18,9 @@
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
 }
+.barWidth{
+    width: 100%;
+}
 
 img{
     padding-top:1px;
